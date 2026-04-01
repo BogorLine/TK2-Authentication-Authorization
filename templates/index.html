@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Biodata Kelompok</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f5f7fa;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.5s;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background: #4a90e2;
+            color: white;
+        }
+
+        .navbar h2 {
+            margin: 0;
+        }
+
+        .navbar button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .login-btn {
+            background: white;
+            color: #4a90e2;
+        }
+
+        .logout-btn {
+            background: #e74c3c;
+            color: white;
+        }
+
+        /* Container */
+        .container {
+            padding: 30px;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* Card Grid */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        /* Card */
+        .card {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .card h3 {
+            margin: 7px 0 4px;
+        }
+
+        .card h4 {
+            text-align: center;
+            margin: 0px;
+        }
+
+        .card p {
+            margin: 0;
+            color: gray;
+        }
+
+    </style>
+</head>
+<body id="main-body">
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <h2>BogorLine</h2>
+
+        <div>
+            {% if user %}
+                <span>{{ user['email'] }}</span>
+                <a href="/logout">
+                    <button class="logout-btn">Logout</button>
+                </a>
+            {% else %}
+                <a href="/login">
+                    <button class="login-btn">Login with Google</button>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="container">
+        <h1>Biodata Kelompok</h1>
+
+        <!-- Card UI -->
+        <div class="card-grid">
+            <div class="card">
+                <img src="static/steve.png">
+                <h4>2406495571</h4>
+                <h3>Akhtar Eijaz Putranto</h3>
+                <p>Backend & OAuth</p>
+            </div>
+
+            <div class="card">
+                <img src="static/redpanda.jpg">
+                <h4>2406401773</h4>
+                <h3>Anya Aleena Wardhany</h3>
+                <p>UI Enhancement</p>
+            </div>
+
+            <div class="card">
+                <img src="static/esnupi.jpg">
+                <h4>2406419663</h4>
+                <h3>Azzahra Anjelika Borselano</h3>
+                <p>Frontend & Coordinator</p>
+            </div>
+
+            <div class="card">
+                <img src="static/loopy.png">
+                <h4>2406355445</h4>
+                <h3>Jessica Tandra</h3>
+                <p>Frontend Logic</p>
+            </div>
+
+            <div class="card">
+                <img src="static/upin.jpg">
+                <h4>2406344542</h4>
+                <h3>Petrus Wermasaubun</h3>
+                <p>Backend Support</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

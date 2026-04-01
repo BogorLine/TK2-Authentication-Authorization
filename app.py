@@ -1,4 +1,4 @@
-from flask import Flask, redirect, request, session, render_template_string, url_for
+from flask import Flask, redirect, request, session, render_template, url_for
 import requests
 import secrets
 import os
@@ -17,63 +17,7 @@ TOKEN_URL = "https://oauth2.googleapis.com/token"
 USER_INFO_URL = "https://www.googleapis.com/oauth2/v2/userinfo"
 
 # masukin email kalian!
-ANGGOTA_KELOMPOK = ["akhtareijaz@gmail.com", ""]
-
-# frontend
-HTML_PAGE = """
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Authentication & Authorization</title>
-    <style>
-        body { font-family: Arial, sans-serif; transition: background-color 0.5s; padding: 20px;}
-        .container { max-width: 600px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-    </style>
-</head>
-<body id="halaman-utama">
-    <div class="container">
-        <h1>Biodata Kelompok BogorLine</h1>
-        <ul>
-            <li>Akhtar Eijaz Putranto (2406495571)</li>
-            <li>Anya Aleena Wardhany (2406401773)</li>
-            <li>Azzahra Anjelika Borselano (2406419663)</li>
-            <li>Jessica Tandra (2406355445)</li>
-            <li>Petrus Wermasaubun (2406344542)</li>
-        </ul>
-        <hr>
-        
-        {% if user %}
-            <h3>Halo, {{ user['email'] }}!</h3>
-            <p>Status Akses: <strong>{{ role }}</strong></p>
-            
-            {% if role == 'Admin' %}
-                <div style="background: #f0f8ff; padding: 15px; border-radius: 5px; margin-bottom: 15px;">
-                    <h4>⚙️ Panel Admin (Authorization Berhasil)</h4>
-                    <label>Ubah Warna Background Web:</label>
-                    <input type="color" id="warnaBackground" onchange="ubahWarna()">
-                </div>
-                
-                <script>
-                    // JavaScript sederhana untuk manipulasi DOM (mengubah warna)
-                    function ubahWarna() {
-                        let warnaDipilih = document.getElementById("warnaBackground").value;
-                        document.getElementById("halaman-utama").style.backgroundColor = warnaDipilih;
-                    }
-                </script>
-            {% else %}
-                <p style="color: gray;"><i>Kamu login sebagai Guest. Hanya anggota kelompok yang dapat mengubah tampilan web.</i></p>
-            {% endif %}
-            
-            <a href="/logout"><button style="background: red; color: white; border: none; padding: 10px;">Logout</button></a>
-        
-        {% else %}
-            <p>Silakan login untuk melihat fitur khusus anggota kelompok.</p>
-            <a href="/login"><button style="background: blue; color: white; border: none; padding: 10px;">Login with Google</button></a>
-        {% endif %}
-    </div>
-</body>
-</html>
-"""
+ANGGOTA_KELOMPOK = ["akhtareijaz@gmail.com", "azzahraanjelikaborselano@gmail.com",]
 
 # backend
 @app.route("/")
@@ -84,7 +28,7 @@ def index():
     if user and user['email'] in ANGGOTA_KELOMPOK:
         role = "Admin"
             
-    return render_template_string(HTML_PAGE, user=user, role=role)
+    return render_template("index.html", user=user, role=role)
 
 @app.route("/login")
 def login():
