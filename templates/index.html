@@ -102,6 +102,39 @@
             color: gray;
         }
 
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .admin-controls {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255,255,255,0.2);
+            padding: 5px 10px;
+            border-radius: 8px;
+        }
+
+        .admin-controls input[type="color"] {
+            border: none;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+        }
+
+        .admin-controls select {
+            border-radius: 6px;
+            border: none;
+            padding: 4px;
+            cursor: pointer;
+        }
+
+        .email {
+            font-size: 14px;
+        }
+
     </style>
 </head>
 <body id="main-body">
@@ -110,9 +143,23 @@
     <div class="navbar">
         <h2>BogorLine</h2>
 
-        <div>
+        <div class="nav-right">
+
+            {% if user and role == 'Admin' %}
+            <div class="admin-controls">
+                <input type="color" id="bgColor" onchange="changeBackground()">
+
+                <select id="fontSelect" onchange="changeFont()">
+                    <option value="'Poppins', sans-serif">Poppins</option>
+                    <option value="Arial, sans-serif">Arial</option>
+                    <option value="'Courier New', monospace">Courier</option>
+                    <option value="'Times New Roman', serif">Times</option>
+                </select>
+            </div>
+            {% endif %}
+
             {% if user %}
-                <span>{{ user['email'] }}</span>
+                <span class="email">{{ user['email'] }}</span>
                 <a href="/logout">
                     <button class="logout-btn">Logout</button>
                 </a>
@@ -166,5 +213,17 @@
             </div>
         </div>
     </div>
+
+   <script>
+        function changeBackground() {
+            const color = document.getElementById("bgColor").value;
+            document.getElementById("main-body").style.backgroundColor = color;
+        }
+
+        function changeFont() {
+            const font = document.getElementById("fontSelect").value;
+            document.body.style.fontFamily = font;
+        }
+    </script>
 </body>
 </html>
