@@ -17,7 +17,11 @@ TOKEN_URL = "https://oauth2.googleapis.com/token"
 USER_INFO_URL = "https://www.googleapis.com/oauth2/v2/userinfo"
 
 # masukin email kalian!
-ANGGOTA_KELOMPOK = ["akhtareijaz@gmail.com", "azzahraanjelikaborselano@gmail.com", "wermasaubunpetrus@gmail.com", "jesiccatandra@gmail.com"]
+ANGGOTA_KELOMPOK = ["akhtareijaz@gmail.com", 
+                    "azzahraanjelikaborselano@gmail.com", 
+                    "wermasaubunpetrus@gmail.com", 
+                    "jesiccatandra@gmail.com",
+                    "anya.aleenaa@gmail.com"]
 
 # backend
 @app.route("/")
