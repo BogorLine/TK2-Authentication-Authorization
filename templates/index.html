@@ -4,209 +4,404 @@
     <meta charset="UTF-8">
     <title>Biodata Kelompok</title>
 
-    <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
+        :root {
+            --base-font-size: 12px;
+        }
+
+        /* light mode */
         body {
             font-family: 'Poppins', sans-serif;
             background: #f5f7fa;
+            color: #333;
             margin: 0;
             padding: 0;
-            transition: background-color 0.5s;
+            font-size: var(--base-font-size);
+            transition: background-color 0.3s ease, color 0.3s ease, font-family 0.3s ease, font-size 0.3s ease;
         }
 
-        /* Navbar */
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 30px;
-            background: #4a90e2;
+            padding: 15px 40px;
+            background: #4a90e2; 
             color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: background-color 0.3s ease;
+            position: relative;
+            z-index: 100;
         }
 
         .navbar h2 {
             margin: 0;
+            font-size: 1.5em;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
         }
 
-        .navbar button {
-            padding: 8px 15px;
+        .navbar button.auth-btn {
+            padding: 8px 18px;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-weight: 700;
+            font-weight: 600;
+            font-size: 0.9em;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
-        .login-btn {
-            background: white;
-            color: #4a90e2;
+        .navbar button.auth-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
 
-        .logout-btn {
-            background: #e74c3c;
-            color: white;
-        }
-
-        /* Container */
-        .container {
-            padding: 30px;
-            max-width: 1100px;
-            margin: auto;
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        /* Card Grid */
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-
-        /* Card */
-        .card {
-            background: white;
-            padding: 15px;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            margin-bottom: 10px;
-        }
-
-        .card h3 {
-            margin: 7px 0 4px;
-        }
-
-        .card h4 {
-            text-align: center;
-            margin: 0px;
-        }
-
-        .card p {
-            margin: 0;
-            color: gray;
-        }
+        .login-btn { background: white; color: #4a90e2; }
+        .logout-btn { background: #e74c3c; color: white; }
 
         .nav-right {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 20px;
         }
 
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2em;
+        }
+
+        /* dark mode */
+        body.dark-mode {
+            background: #121212;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .navbar {
+            background: #1f1f1f;
+            box-shadow: 0 2px 10px rgba(255,255,255,0.05);
+        }
+
+        body.dark-mode .card {
+            background: #3c3b3b;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+        }
+
+        body.dark-mode .card h3 { color: #ffffff; }
+        body.dark-mode .card h4 { color: #5bc0de; }
+        
+        body.dark-mode .card p {
+            background: #2c2c2c;
+            color: #bbb;
+        }
+
+        body.dark-mode .dropdown-menu {
+            background: #2c2c2c;
+            color: white;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+        }
+
+        body.dark-mode .dropdown-menu label { color: #ccc; }
+        body.dark-mode .dropdown-menu select {
+            background: #1e1e1e;
+            color: white;
+            border: 1px solid #555;
+        }
+
+        /* admin controls */
         .admin-controls {
             display: flex;
             align-items: center;
-            gap: 6px;
-            background: rgba(255,255,255,0.2);
-            padding: 5px 10px;
-            border-radius: 8px;
+            gap: 15px;
         }
 
-        .admin-controls input[type="color"] {
-            border: none;
-            width: 30px;
-            height: 30px;
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+        }
+
+        /* toggle mode */
+        .theme-switch {
+            position: relative;
+            display: inline-block;
+            width: 64px;
+            height: 32px;
+        }
+
+        .theme-switch input { 
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider.round {
+            position: absolute;
             cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #e4e4e4; /* Background Light Mode */
+            transition: .4s;
+            border-radius: 34px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        .admin-controls select {
+        .slider-icons {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 8px;
+            box-sizing: border-box;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .sun-icon { color: #333; width: 16px; height: 16px; }
+        .moon-icon { color: #fff; width: 16px; height: 16px; }
+
+        .slider.round:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 3px;
+            bottom: 3px;
+            background-color: #333;
+            transition: .4s cubic-bezier(0.4, 0.0, 0.2, 1);
+            border-radius: 50%;
+            transform: translateX(32px);
+            z-index: 2;
+        }
+
+        input:checked + .slider.round {
+            background-color: #555555;
+        }
+        
+        input:checked + .slider.round:before {
+            transform: translateX(0);
+            background-color: white;
+        }
+
+        /* font dropdown */
+        .dropdown-trigger {
+            background: white;
+            color: #333;
+            border: none;
+            padding: 6px 12px;
             border-radius: 6px;
-            border: none;
-            padding: 4px;
+            font-size: 0.85em;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 110%;
+            left: 0;
+            background: white;
+            color: #333;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            min-width: 200px;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 200;
+        }
+
+        .dropdown-menu.show { display: flex; }
+
+        .dropdown-menu label {
+            font-size: 0.85em;
+            font-weight: 600;
+            color: #555;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .dropdown-menu select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-family: inherit;
+        }
+
+        .dropdown-menu input[type="range"] {
+            width: 100%;
             cursor: pointer;
         }
 
-        .email {
-            font-size: 14px;
+        .email { font-size: 0.9em; font-weight: 600; }
+
+        /* card layout */
+        .container {
+            padding: 40px 30px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .card-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 2em 1.5em;
+            border-radius: 1em;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            flex: 1 1 calc(10% - 10px); 
+            min-width: 14em; 
+            max-width: 20em;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+        }
+
+        .card img {
+            width: 6em;
+            height: 6em;
+            border-radius: 50%;
+            margin-bottom: 1em;
+            object-fit: cover;
+            border: 0.2em solid transparent;
+        }
+
+        .card h4 {
+            margin: 0;
+            color: #4a90e2;
+            font-size: 0.85em;
+            letter-spacing: 1px;
+        }
+
+        .card h3 {
+            margin: 0.5em 0;
+            color: #2c3e50;
+            font-size: 1.1em;
+        }
+
+        .card p {
+            margin: auto 0 0 0;
+            font-size: 0.85em;
+            font-weight: 500;
+            background: #f8f9fa;
+            color: #7f8c8d;
+            padding: 0.4em 1em;
+            border-radius: 1.5em;
         }
 
     </style>
 </head>
-<body id="main-body">
 
-    <!-- Navbar -->
-    <div class="navbar">
+<body id="main-body" data-is-admin="{% if user and role == 'Admin' %}true{% else %}false{% endif %}">
+
+    <div class="navbar" id="navbar">
         <h2>BogorLine</h2>
 
         <div class="nav-right">
 
             {% if user and role == 'Admin' %}
             <div class="admin-controls">
-                <input type="color" id="bgColor" onchange="changeBackground()">
+                
+                <div class="control-group">
+                    <label class="theme-switch" title="Ubah Mode Layar">
+                        <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()">
+                        <div class="slider round">
+                            <div class="slider-icons">
+                                <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="5"></circle>
+                                    <line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                                </svg>
+                                <svg class="moon-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M20.14 14.53A8.99 8.99 0 0 1 10.3 3.1 9 9 0 1 0 20.14 14.53z" />
+                                </svg>
+                            </div>
+                        </div>
+                    </label>
+                </div>
 
-                <select id="fontSelect" onchange="changeFont()">
-                    <option value="'Poppins', sans-serif">Poppins</option>
-                    <option value="Arial, sans-serif">Arial</option>
-                    <option value="'Courier New', monospace">Courier</option>
-                    <option value="'Times New Roman', serif">Times</option>
-                </select>
+                <div class="control-group">
+                    <button class="dropdown-trigger" onclick="toggleFontMenu()">Change Font</button>
+                    
+                    <div class="dropdown-menu" id="fontDropdown">
+                        <label>Jenis Font:</label>
+                        <select id="fontSelect" onchange="updateTypographyRealtime()">
+                            <option value="'Poppins', sans-serif">Poppins</option>
+                            <option value="Arial, sans-serif">Arial</option>
+                            <option value="'Courier New', monospace">Courier</option>
+                            <option value="'Times New Roman', serif">Times</option>
+                        </select>
+
+                        <label>
+                            Ukuran Teks: 
+                            <span id="sliderValue">16px</span>
+                        </label>
+                        <input type="range" id="fontSizeSlider" min="12" max="28" value="16" oninput="updateTypographyRealtime()">
+                    </div>
+                </div>
+
             </div>
             {% endif %}
 
             {% if user %}
                 <span class="email">{{ user['email'] }}</span>
                 <a href="/logout">
-                    <button class="logout-btn">Logout</button>
+                    <button class="auth-btn logout-btn">Logout</button>
                 </a>
             {% else %}
                 <a href="/login">
-                    <button class="login-btn">Login with Google</button>
+                    <button class="auth-btn login-btn">Login</button>
                 </a>
             {% endif %}
         </div>
     </div>
 
-    <!-- Content -->
     <div class="container">
-        <h1>Biodata Kelompok</h1>
-
-        <!-- Card UI -->
-        <div class="card-grid">
+        <h1 id="title-text">Biodata Kelompok</h1>
+        <div class="card-wrapper">
             <div class="card">
-                <img src="static/steve.png">
+                <img src="static/steve.png" alt="Akhtar">
                 <h4>2406495571</h4>
                 <h3>Akhtar Eijaz Putranto</h3>
                 <p>Backend & OAuth</p>
             </div>
-
             <div class="card">
-                <img src="static/redpanda.jpg">
+                <img src="static/redpanda.jpg" alt="Anya">
                 <h4>2406401773</h4>
                 <h3>Anya Aleena Wardhany</h3>
                 <p>UI Enhancement</p>
             </div>
-
             <div class="card">
-                <img src="static/esnupi.jpg">
+                <img src="static/esnupi.jpg" alt="Azzahra">
                 <h4>2406419663</h4>
                 <h3>Azzahra Anjelika Borselano</h3>
                 <p>Frontend & Coordinator</p>
             </div>
-
             <div class="card">
-                <img src="static/loopy.png">
+                <img src="static/loopy.png" alt="Jessica">
                 <h4>2406355445</h4>
                 <h3>Jessica Tandra</h3>
                 <p>Frontend Logic</p>
             </div>
-
             <div class="card">
-                <img src="static/upin.jpg">
+                <img src="static/upin.jpg" alt="Petrus">
                 <h4>2406344542</h4>
                 <h3>Petrus Wermasaubun</h3>
                 <p>Backend Support</p>
@@ -215,15 +410,97 @@
     </div>
 
    <script>
-        function changeBackground() {
-            const color = document.getElementById("bgColor").value;
-            document.getElementById("main-body").style.backgroundColor = color;
+        function toggleFontMenu() {
+            const menu = document.getElementById("fontDropdown");
+            menu.classList.toggle("show");
         }
 
-        function changeFont() {
-            const font = document.getElementById("fontSelect").value;
-            document.body.style.fontFamily = font;
+        function toggleDarkMode() {
+            const isDark = document.getElementById("darkModeToggle").checked;
+            const body = document.getElementById("main-body");
+            const isAdmin = body.getAttribute("data-is-admin") === "true";
+
+            if (isDark) {
+                document.body.classList.add("dark-mode");
+                if (isAdmin) localStorage.setItem("adminTheme", "dark");
+            } else {
+                document.body.classList.remove("dark-mode");
+                if (isAdmin) localStorage.setItem("adminTheme", "light");
+            }
         }
+
+        function updateTypographyRealtime() {
+            const fontSelect = document.getElementById("fontSelect");
+            const fontSizeSlider = document.getElementById("fontSizeSlider");
+
+            if (fontSelect && fontSizeSlider) {
+                const font = fontSelect.value;
+                const size = fontSizeSlider.value;
+
+                document.getElementById("sliderValue").innerText = size + "px";
+
+                document.body.style.fontFamily = font;
+                document.documentElement.style.setProperty('--base-font-size', size + 'px');
+
+                const body = document.getElementById("main-body");
+                const isAdmin = body.getAttribute("data-is-admin") === "true";
+
+                if(isAdmin) {
+                    localStorage.setItem("adminFontFamily", font);
+                    localStorage.setItem("adminFontSize", size);
+                }
+            }
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropdown-trigger') && !event.target.closest('.dropdown-menu')) {
+                const dropdowns = document.getElementsByClassName("dropdown-menu");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    if (dropdowns[i].classList.contains('show')) {
+                        dropdowns[i].classList.remove('show');
+                    }
+                }
+            }
+        }
+
+        function loadSavedPreferences() {
+            const body = document.getElementById("main-body");
+            const isAdmin = body.getAttribute("data-is-admin") === "true";
+
+            if (isAdmin) {
+                const savedTheme = localStorage.getItem("adminTheme");
+                const savedFont = localStorage.getItem("adminFontFamily");
+                const savedFontSize = localStorage.getItem("adminFontSize");
+
+                if (savedTheme === "dark") {
+                    document.body.classList.add("dark-mode");
+                    const toggle = document.getElementById("darkModeToggle");
+                    if (toggle) toggle.checked = true;
+                }
+
+                if (savedFont) {
+                    document.body.style.fontFamily = savedFont;
+                    const fontInput = document.getElementById("fontSelect");
+                    if (fontInput) fontInput.value = savedFont;
+                }
+
+                if (savedFontSize) {
+                    document.documentElement.style.setProperty('--base-font-size', savedFontSize + 'px');
+                    const slider = document.getElementById("fontSizeSlider");
+                    if (slider) {
+                        slider.value = savedFontSize;
+                        document.getElementById("sliderValue").innerText = savedFontSize + "px";
+                    }
+                }
+            } else {
+                // non admin users (default)
+                document.body.classList.remove("dark-mode");
+                document.body.style.fontFamily = "'Poppins', sans-serif";
+                document.documentElement.style.setProperty('--base-font-size', '12px');
+            }
+        }
+
+        loadSavedPreferences();
     </script>
 </body>
 </html>
